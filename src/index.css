@@ -1,0 +1,72 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+* {
+  font-family: "Inter";
+  box-sizing: border-box;
+}
+
+/* Line clamp utilities for text truncation */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.react-tel-input .selected-flag .arrow{
+  /* Adjust these properties as needed */
+  position: absolute !important;
+  bottom: 20% !important; /* Example: Position vertically in the middle */
+  left: 20px !important; /* Example: Position 10px from the right */
+  transform: translateY(-50%) !important; /* Adjust vertical alignment */
+}
+.react-tel-input .country-list {
+  text-align: left;
+}
+.react-tel-input .country-list .search {
+  display: flex;
+}
+.react-tel-input .country-list .search-box {
+  width:85%
+}
+.scrollbar-transparent::-webkit-scrollbar
+{
+  background : transparent;
+  width: 6px;
+}
+.scrollbar-transparent::-webkit-scrollbar-thumb
+{
+  width: 6px;
+  background : #ccc;
+  border-radius: 20px;
+}
+
+/* Always show horizontal scrollbar */
+.always-show-scrollbar::-webkit-scrollbar {
+  height: 8px;
+  display: block !important;
+}
+.always-show-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+.always-show-scrollbar::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+.always-show-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

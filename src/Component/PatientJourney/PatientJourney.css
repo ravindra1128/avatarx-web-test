@@ -1,0 +1,187 @@
+.patient-journey-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 3.125rem;
+  max-width: 1280px;
+  margin: 120px auto;
+}
+
+.intro-text {
+  text-align: center;
+}
+.intro-text h2 {
+  font-size: 3.125rem;
+  line-height: 1.1;
+  max-width: 53.125rem;
+  margin-left: auto;
+  margin-right: auto;
+  color: #2e3d48;
+  letter-spacing: -0.125rem;
+  font-weight: 400;
+}
+
+.data-collection-container {
+  margin-top: 5rem;
+}
+.journey-box {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: -3.4375rem;
+  display: inline-flex;
+  justify-content: center;
+}
+.journey-box .header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.highlighted-text {
+  color: #333;
+}
+.data-collection-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.step-number {
+  font-size: 16px;
+  width: 2.625rem;
+  line-height: 1;
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+  text-align: center;
+  color: #fff;
+}
+.journey-box img {
+  height: 5rem;
+}
+
+.title {
+  font-size: 1.5625rem;
+  letter-spacing: -0.075rem;
+  line-height: 1;
+  font-weight: 400;
+  padding-left: 1.875rem;
+  padding-right: 1.875rem;
+  flex: 1 1 0%;
+  margin-left: 0.625rem;
+  text-align: center;
+  color: #2e3d48;
+}
+
+.center-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 3.125rem;
+  margin-right: 3.125rem;
+}
+
+.heart-image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.analysis-details,
+.intervention-details,
+.data-exchange-details,
+.exchange-connections {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  font-size: 16px;
+  flex-wrap: wrap;
+}
+
+.data-exchange-details {
+  margin-bottom: 20px;
+}
+
+.button-container {
+  margin-top: 20px;
+}
+
+.unlock-button {
+  background-color: #2c3e50;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.unlock-arrow {
+  color: #0000;
+  margin-left: 10px;
+  /* font-size: 1.5em;
+  position: absolute;
+  right: 15px;
+  bottom: 15px; */
+  background-color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.journey-connecting-img {
+  height: 8.75rem;
+  margin-bottom: -6.875rem;
+  overflow: hidden;
+}
+.journey-connecting-img img {
+  width: 5.75rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -3.125rem;
+}
+@media only screen and (max-width: 768px) {
+  .intro-text h2 {
+    font-size: 30px;
+    line-height: 1.1;
+    letter-spacing: -0.0375rem;
+  }
+  .patient-journey-container {
+    padding: 0 20px;
+    margin: 70px auto;
+  }
+  .title {
+    margin-left: 0.625rem;
+    padding-left: 1.875rem;
+    padding-right: 1.875rem;
+    font-size: 20px;
+    flex: 1 1 0%;
+  }
+  .journey-box img {
+    width: auto;
+    height: 3.4375rem;
+  }
+  .journey-box {
+    margin-left: -1.875rem;
+  }
+  .step-number {
+    width: 1.875rem;
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
+  }
+}

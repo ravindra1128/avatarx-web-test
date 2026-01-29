@@ -1,0 +1,316 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 40px;
+    background: hsla(0, 0%, 100%, 0);
+    backdrop-filter: blur(30px) opacity(0);
+    transition: background-color 0.3s ease; /* Smooth transition */
+  }
+  
+  .navbar.scrolled {
+    backdrop-filter: blur(30px) opacity(1);
+    background-color: hsla(
+      0,
+      0%,
+      100%,
+      0.39
+    ); /* Change to desired color on scroll */
+  }
+  
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin: 0;
+  }
+  
+  .nav-links li {
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: #333; /* Adjust as needed */
+    font-weight: bold;
+  }
+  
+  .demo-button {
+    background-color: #333; /* Adjust as needed */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .demo-button:hover {
+    background-color: #333; /* Adjust as needed */
+  }
+  
+  .contact-button {
+    background-color: #e0e0e0; /* Light gray background */
+    color: #333; /* Dark text color */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease; /* Smooth transition */
+    min-width: 140px;
+  }
+  
+  .contact-button:hover {
+    background-color: #d5d5d5; /* Slightly darker gray on hover */
+  }
+  .mobile-menu {
+    display: none;
+  }
+  .toggle-btn {
+    cursor: pointer;
+    display: none;
+    height: 37px;
+    left: 0;
+    padding: initial;
+    position: relative;
+    top: 0;
+    width: 37px;
+    z-index: 1000;
+    background: none;
+    border: none;
+  }
+  .toggle-btn svg {
+    width: 40px;
+  }
+  .toggle-btn svg g
+  {
+    stroke: #000;
+  }
+  .close-btn {
+    background: transparent;
+    border: none;
+    text-align: right;
+  }
+  .close-btn svg {
+    width: 40px;
+    height: 40px;
+    stroke: #000;
+  }
+  .close-btn svg path {
+    fill: #000;
+  }
+  .toggle-btn span
+  {
+    background-color: #303030;
+    display: block;
+    height: 2px;
+    left: 0;
+    margin: auto;
+    position: absolute;
+    right: 0;
+    transition: all .3s;
+    width: 30px;
+  }
+  .toggle-btn span:first-child
+  {
+    top: 6px;
+  }
+  .toggle-btn span:nth-child(2)
+  {
+    top: 17px;
+  }
+  .toggle-btn span:last-child
+  {
+    top: 28px;
+  }
+  .toggle-btn.toggle-active span:first-child
+  {
+    top: 16px;
+    transform: rotate(135deg);
+  }
+  .toggle-btn.toggle-active span:nth-child(2)
+  {
+    opacity: 0;
+  }
+  .toggle-btn.toggle-active span:last-child
+  {
+    top: 16px;
+    transform: rotate(-135deg);
+  }
+  .mobile-auth-button {
+    display: none;
+  }
+  @media only screen and (max-width: 768px) {
+    .toggle-btn {
+      display: block;
+    }
+    .mobile-auth-button {
+      display: block;
+    }
+    .mobile-auth {
+      display: none;
+    }
+    .mobile-menu {
+      display: flex;
+    }
+    .mobile-hide {
+      display: none;
+    }
+    .nav-links {
+      position: fixed;
+      top: 77px;
+      left: 0;
+      width: 100%;
+      height: calc(100vh - 77px);
+      overflow: auto;
+      flex-direction: column;
+      transform-origin: top;
+      background-color: #fff;
+      backdrop-filter: blur(10px);
+      transform: scaleY(0);
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.4s ease;
+      z-index: 99999;
+      padding: 30px;
+    }
+    .nav-links.toggle-active {
+      transform: scaleY(1);
+      opacity: 1;
+      visibility: visible;
+    }
+    .navbar.toggle-active
+    {
+      background-color: #fff;
+    }
+    .navbar
+    {
+      padding: 20px 20px;
+    }
+  }
+  
+
+  .not-mobile {
+    display: none !important;
+  }
+  .mobile-screen {
+    display: block !important;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .not-mobile {
+      display: block !important;
+    }
+    .mobile-screen {
+      display: none !important;
+    }
+  }
+
+/* --- Login Dropdown Black & White Theme --- */
+.login-dropdown {
+    background: #181818 !important;
+    color: #fff !important;
+    border: 1px solid #333 !important;
+    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.22) !important;
+    border-radius: 16px !important;
+    animation: dropdownPopIn 0.35s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+    transform-origin: top right;
+}
+
+@keyframes dropdownPopIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-16px) scale(0.96);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(4px) scale(1.03);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.login-dropdown .py-1 {
+    padding: 8px 0;
+}
+
+.login-dropdown a {
+    min-width: 0;
+    flex: 1 1 0;
+    text-align: left;
+    white-space: nowrap;
+    color: #fff !important;
+    background: none !important;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: background 0.18s, color 0.18s;
+    position: relative;
+    overflow: hidden;
+    padding-left: 14px;
+    padding-right: 8px;
+    padding-bottom: 8px; /* Add space between text and underline */
+}
+.login-dropdown a::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 2px; /* Move underline closer to the bottom, adjust as needed */
+    height: 2px;
+    background: linear-gradient(90deg, #fff 0%, #bbb 100%);
+    border-radius: 2px;
+    width: 0;
+    transition: width 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+.login-dropdown a:hover {
+    background: #232323 !important;
+    color: #fafafa !important;
+}
+.login-dropdown a:hover::after {
+    width: calc(100% - 16px);
+}
+
+.login-dropdown .border-t {
+    border-color: #333 !important;
+}
+
+@media (max-width: 600px) {
+  .login-dropdown {
+    min-width: 0 !important;
+    width: auto !important;
+    max-width: 90vw !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    right: auto !important;
+    border-radius: 16px !important;
+  }
+  .login-dropdown .py-1 {
+    padding: 4px 0;
+  }
+  .login-dropdown a {
+    padding-left: 18px;
+    padding-right: 12px;
+    font-size: 1rem;
+  }
+}
+
+@keyframes dropdownFadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

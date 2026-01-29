@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Performance Optimizations -->
+    <link rel="preload" href="/src/main.jsx" as="script" />
+    <link rel="preload" href="/src/global.css" as="style" />
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+    
+    <!-- Cross-Origin Security Headers (as Meta Tags) -->
+    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin">
+    <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp">
+    <meta http-equiv="Cross-Origin-Resource-Policy" content="cross-origin">
+    
+    <!-- Default SEO Meta Tags -->
+    <title>AvatarX Health - AI-Powered Healthcare Solutions</title>
+    <meta name="description" content="Transform healthcare delivery with AvatarX Health. AI-powered chronic care management and remote patient monitoring solutions that improve patient outcomes and reduce costs." />
+    <meta name="keywords" content="healthcare AI, chronic care management, remote patient monitoring, digital health, patient engagement, healthcare technology" />
+    <meta name="author" content="AvatarX Health" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AvatarX Health - AI-Powered Healthcare Solutions" />
+    <meta property="og:description" content="Transform healthcare delivery with AI-powered chronic care management and remote patient monitoring." />
+    <meta property="og:image" content="https://dev.theavatarx.com/social.png" />
+    <meta property="og:url" content="https://dev.theavatarx.com" />
+    <meta property="og:site_name" content="AvatarX Health" />
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="AvatarX Health - AI-Powered Healthcare Solutions" />
+    <meta name="twitter:description" content="Transform healthcare delivery with AI-powered chronic care management and remote patient monitoring." />
+    <meta name="twitter:image" content="https://dev.theavatarx.com/social.png" />
+    
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#1279BA" />
+    <meta name="msapplication-TileColor" content="#1279BA" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="AvatarX Health" />
+    
+    <!-- Android Chrome OTP Auto-Populate Compatibility -->
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="application-name" content="AvatarX Health" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://dev.theavatarx.com" />
+    
+    <!-- Preconnect to external domains for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "AvatarX Health",
+      "url": "https://dev.theavatarx.com",
+      "logo": "https://dev.theavatarx.com/social.png",
+      "description": "AI-powered healthcare solutions for chronic care management and remote patient monitoring",
+      "foundingDate": "2024",
+      "industry": "Healthcare Technology",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "US"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "availableLanguage": "English"
+      },
+      "sameAs": [
+        "https://linkedin.com/company/avatarx-health",
+        "https://twitter.com/avatarxhealth"
+      ]
+    }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+
+        <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DFLNKD0EWY"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-DFLNKD0EWY');
+    </script>
+  </body>
+</html>

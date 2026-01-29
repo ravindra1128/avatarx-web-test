@@ -1,0 +1,77 @@
+/* Mobile Navigation Styles */
+.mobile-navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  border-top: 1px solid #e5e7eb;
+  z-index: 1000;
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.mobile-navigation-top-line {
+  height: 2px;
+  background: #3b82f6; /* Light blue line at the top */
+  width: 100%;
+}
+
+.mobile-navigation-content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 8px 0;
+  min-height: 60px;
+}
+
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  min-width: 60px;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+}
+
+.mobile-nav-item:hover {
+  transform: translateY(-2px);
+  background-color: #f3f4f6;
+}
+
+.mobile-nav-item.active {
+  transform: translateY(-2px);
+  background-color: #eff6ff;
+}
+
+.mobile-nav-icon {
+  color: #374151; /* Dark gray color */
+  margin-bottom: 4px;
+  transition: color 0.2s ease;
+}
+
+.mobile-nav-icon.active {
+  color: #000; /* Blue color for active state */
+}
+
+.mobile-nav-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #374151; /* Dark gray color */
+  text-align: center;
+  line-height: 1.2;
+  transition: color 0.2s ease;
+}
+
+.mobile-nav-label.active {
+  color: #000; /* Blue color for active state */
+}
+
+/* Add bottom padding to pages to prevent content from being hidden behind the navigation */
+body.has-mobile-nav {
+  padding-bottom: 80px;
+}

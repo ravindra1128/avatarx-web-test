@@ -1,0 +1,280 @@
+.patient-dashboard {
+  background-color: #ffffff;
+  min-height: 100vh;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+
+/* Top Section - Header */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-picture {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f5f5f5;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+}
+
+.patient-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.date-selector {
+  display: flex;
+  align-items: center;
+}
+
+/* Logging Progress Section */
+.logging-progress-section {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 0 20px;
+}
+
+.progress-title {
+  font-size: 18px;
+  font-weight: 400;
+  color: #4a5568;
+  margin: 0 0 10px 0;
+}
+
+.progress-message {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0 0 30px 0;
+}
+
+.progress-chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 25px auto;
+  width: 100%;
+  max-width: 400px;
+  padding: 0 30px;
+}
+
+.progress-status {
+  font-size: 16px;
+  color: #4a5568;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Blood Pressure Card */
+.bp-card {
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+  margin: 0 20px 30px 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  color: #1a202c;
+}
+
+.bp-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.bp-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bp-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a202c;
+}
+
+.bp-card-time {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #718096;
+  font-size: 14px;
+}
+
+.bp-chevron {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.bp-card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.bp-readings {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bp-label {
+  font-size: 14px;
+  color: #718096;
+  font-weight: 500;
+}
+
+.bp-values {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.bp-systolic {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1a202c;
+}
+
+.bp-separator {
+  font-size: 24px;
+  font-weight: 600;
+  color: #718096;
+}
+
+.bp-diastolic {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1a202c;
+}
+
+.bp-unit {
+  font-size: 16px;
+  color: #718096;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+.bp-button-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+/* Calorie Trends Card */
+.calorie-card {
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+  margin: 0 20px 30px 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  color: #1a202c;
+}
+
+.calorie-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0px;
+}
+
+.calorie-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.calorie-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a202c;
+}
+
+.calorie-card-time {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #718096;
+  font-size: 14px;
+}
+
+.calorie-chevron {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.calorie-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.calorie-graph-container {
+  width: 100%;
+  height: 120px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 8px;
+}
+
+.calorie-count {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.calorie-current {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1a202c;
+}
+
+.calorie-separator {
+  font-size: 24px;
+  font-weight: 600;
+  color: #718096;
+}
+
+.calorie-target {
+  font-size: 16px;
+  color: #718096;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+.calorie-button-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
