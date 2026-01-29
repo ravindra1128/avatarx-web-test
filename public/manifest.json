@@ -1,0 +1,26 @@
+{
+  "name": "AvatarX Health - ",
+  "short_name": "AvatarX ",
+  "description": "Transforms healthcare delivery with AI-powered chronic care management and remote patient monitoring solutions.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1279BA",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16 32x32",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/header.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["health", "medical", "productivity"],
+  "lang": "en-US",
+  "dir": "ltr"
+} 

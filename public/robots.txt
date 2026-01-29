@@ -1,0 +1,27 @@
+User-agent: *
+Allow: /
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /super-admin/
+Disallow: /login
+Disallow: /auth/
+Disallow: /patient/
+Disallow: /patients/
+Disallow: /profile/
+
+# Allow important pages
+Allow: /
+Allow: /chronic-care-management
+Allow: /remote-patient-monitoring
+Allow: /contact-us
+Allow: /privacy
+Allow: /terms
+Allow: /try-demo
+
+# Sitemap location
+Sitemap: https://theavatarx.com/sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 1 
