@@ -8,6 +8,7 @@ const isLocal = VITE_AVATARX_ENV === "avatarx_local_fe";
 const initializeDatadog = () => {
   if (isLocal) return;
   
+
   datadogRum.init({
     applicationId: "ed5e4bb6-58d3-4528-8057-bd3fc6388530",
     clientToken: "pubb81d9fa8c7da517899d3301893962664",
