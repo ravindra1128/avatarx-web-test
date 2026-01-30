@@ -24,7 +24,7 @@ const initializeDatadog = () => {
     forwardErrorsToLogs: true,
   });
 
-  // Initialize Datadog Logs
+  // Initialize Datadog Logs (after RUM so logs can be correlated)
   datadogLogs.init({
     clientToken: "pubb81d9fa8c7da517899d3301893962664",
     site: "us5.datadoghq.com",
@@ -32,6 +32,7 @@ const initializeDatadog = () => {
     sessionSampleRate: 100,
     service: VITE_AVATARX_SERVICE,
     env: VITE_AVATARX_ENV,
+    version: VITE_APP_VERSION,
   });
 
   logInfo("Datadog initialized");
@@ -49,16 +50,40 @@ const logInfo = (message, context = {}) => {
   });
 };
 
-const logError = (error, msg = "") => {
+/**
+ * Log an error. Datadog expects (message: string, context?: object, error?: Error).
+ * Supports: logError(message), logError(message, context), logError(message, context, error), or logError(message, error).
+ */
+const logError = (messageOrError, contextOrError = {}, maybeError = undefined) => {
+  const baseContext = { service: VITE_AVATARX_SERVICE, env: VITE_AVATARX_ENV };
+  let message;
+  let context = {};
+  let errorObj;
+
+  if (typeof messageOrError === "string") {
+    message = messageOrError;
+    if (contextOrError instanceof Error) {
+      errorObj = contextOrError;
+    } else if (contextOrError && typeof contextOrError === "object") {
+      context = contextOrError;
+    }
+    if (maybeError instanceof Error) errorObj = maybeError;
+  } else if (messageOrError instanceof Error) {
+    errorObj = messageOrError;
+    message = messageOrError.message || String(messageOrError);
+    if (contextOrError && typeof contextOrError === "object" && !(contextOrError instanceof Error)) {
+      context = contextOrError;
+    }
+  } else {
+    message = String(messageOrError);
+    if (contextOrError instanceof Error) errorObj = contextOrError;
+  }
+
   if (isLocal) {
-    console.error(error, msg);
+    console.error(message, context, errorObj ?? "");
     return;
   }
-  datadogLogs.logger.error(error, {
-    message: msg,
-    service: VITE_AVATARX_SERVICE,
-    env: VITE_AVATARX_ENV
-  });
+  datadogLogs.logger.error(message, { ...context, ...baseContext }, errorObj);
 };
 
 const logWarn = (message, context = {}) => {
@@ -87,14 +112,14 @@ const logDebug = (message, context = {}) => {
 
 const logCritical = (message, context = {}) => {
   if (isLocal) {
-    console.error('CRITICAL:', message, context);
+    console.error("CRITICAL:", message, context);
     return;
   }
-  datadogLogs.logger.critical(message, {
-    ...context,
-    service: VITE_AVATARX_SERVICE,
-    env: VITE_AVATARX_ENV
-  });
+  const fullContext = { ...context, service: VITE_AVATARX_SERVICE, env: VITE_AVATARX_ENV };
+  datadogLogs.logger.critical(message, fullContext);
+  // Also send as error so it appears in error-focused views and RUM
+  const errorFromContext = context?.error instanceof Error ? context.error : undefined;
+  datadogLogs.logger.error(message, fullContext, errorFromContext);
 };
 
 const logEvent = (eventName, context = {}) => {
@@ -150,10 +175,13 @@ const shouldLogAsWarning = (error) => {
 
 // Smart error logging function that categorizes errors appropriately
 const logErrorSmart = (error, context = {}) => {
+  const message = error?.message ?? String(error);
+  const errObj = error instanceof Error ? error : undefined;
+  const ctx = { ...context, ...(errObj && { error: errObj }) };
   if (shouldLogAsWarning(error)) {
-    logError(`ShenAI: ${error}`, context);
+    logError(`ShenAI: ${message}`, ctx, errObj);
   } else {
-    logCritical(`ShenAI: ${error}`, context);
+    logCritical(`ShenAI: ${message}`, ctx);
   }
 };
 

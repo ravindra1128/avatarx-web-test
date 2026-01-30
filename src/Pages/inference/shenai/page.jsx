@@ -8,6 +8,12 @@ import {
 } from "../../../api/user.service";
 import { logCritical, logErrorSmart, logInfo, logWarn, logError } from "../../../utils/logger";
 
+const errCtx = (error, phase) => ({
+  phase,
+  message: error?.message ?? String(error),
+  stack: error?.stack,
+});
+
 import { getShenaiEvents } from "./events";
 import {
   EMERGENCY_MSG,
@@ -42,6 +48,7 @@ export default function Shenai() {
   const sendSessionLog = async (endMs) => {
     if (authData) {
       setIsLogging(true);
+      logInfo("ShenAI: Sending session log", { startTime: startTimeRef.current, endMs });
       try {
         const payload = {
           sessionType: "video",
@@ -51,12 +58,12 @@ export default function Shenai() {
         await logSessionActivity(payload);
         logInfo("ShenAI: Session log sent");
       } catch (error) {
-        logCritical("ShenAI: Error logging session:", error);
+        logCritical("ShenAI: Error logging session", errCtx(error, "send_session_log"));
       } finally {
         setIsLogging(false);
       }
     } else {
-      logWarn("ShenAI: No auth data");
+      logWarn("ShenAI: No auth data, skipping session log");
     }
   };
 
@@ -76,7 +83,9 @@ export default function Shenai() {
   }, []);
 
   useEffect(() => {
+    logInfo("ShenAI: Page mounted", { pathname: location.pathname, token: !!token });
     window.scrollTo(0, 0);
+    return () => logInfo("ShenAI: Page unmounting");
   }, []);
 
   // Detect mobile screens with proper resize handling
@@ -109,16 +118,18 @@ export default function Shenai() {
     let instance = null;
     async function loadShenaiSDK() {
       try {
-        logInfo("ShenAI:Loading Shenai SDK");
+        logInfo("ShenAI: Loading Shenai SDK");
         const { default: CreateShenaiSDK } = await import(
           "../../../../shenai-sdk/index.mjs"
         );
         if (isCancelled) {
-          logInfo("ShenAI: SDK cancelled");
+          logInfo("ShenAI: SDK load cancelled (unmount before load)");
           return;
         }
         instance = await CreateShenaiSDK({
-          onRuntimeInitialized: () => {},
+          onRuntimeInitialized: () => {
+            logInfo("ShenAI: SDK runtime initialized");
+          },
         });
 
         logInfo("ShenAI: Shenai SDK created");
@@ -180,7 +191,7 @@ export default function Shenai() {
             eventCallback: getShenaiEvents({ instance, navigate }),
           },
           (result) => {
-            // logInfo("Initialization result", result);
+            logInfo("ShenAI: Initialization callback received", { result: result?.toString?.() ?? result });
             if (result === instance.InitializationResult.OK) {
               logInfo("ShenAI: Initialization successful");
               document.getElementById("stage").className = "state-loaded";
@@ -199,9 +210,9 @@ export default function Shenai() {
 
         logInfo("ShenAI: Shenai SDK loaded");
       } catch (error) {
-        alert("Something went wrong, please refresh the page and try again.");
+        logCritical("ShenAI: SDK load or init failed", errCtx(error, "load_shenai_sdk"));
         logErrorSmart(error);
-        // showError("Error loading or initializing");
+        alert("Something went wrong, please refresh the page and try again.");
       }
     }
 
@@ -258,7 +269,7 @@ export default function Shenai() {
       shenai.setCustomColorTheme(themes[theme]);
       logInfo(`ShenAI: Shenai color theme set to: ${theme}`);
     } catch (error) {
-      logWarn("ShenAI: Error setting Shenai color theme:", error);
+      logError("ShenAI: Error setting Shenai color theme", errCtx(error, "set_color_theme"));
     }
   }
 
@@ -273,16 +284,32 @@ export default function Shenai() {
 
     if (userLanguage && shenai.getLanguage() !== userLanguage) {
       logInfo("ShenAI: Setting language to " + userLanguage);
-      shenai.setLanguage(userLanguage);
+      try {
+        shenai.setLanguage(userLanguage);
+      } catch (err) {
+        logError("ShenAI: Error setting language", errCtx(err, "set_language"));
+      }
     }
 
     if (shenai.getOperatingMode() !== shenai.OperatingMode.MEASURE) {
       logInfo("ShenAI: Setting operating mode to MEASURE");
-      shenai.setOperatingMode(shenai.OperatingMode.MEASURE);
-      localStorage.setItem("measuring", "true");
+      try {
+        shenai.setOperatingMode(shenai.OperatingMode.MEASURE);
+        localStorage.setItem("measuring", "true");
+      } catch (err) {
+        logError("ShenAI: Error setting operating mode", errCtx(err, "set_operating_mode"));
+      }
 
       if (wakeLock === null) {
-        navigator.wakeLock.request("screen").then((lock) => (wakeLock = lock));
+        navigator.wakeLock
+          .request("screen")
+          .then((lock) => {
+            wakeLock = lock;
+            logInfo("ShenAI: Screen wake lock acquired");
+          })
+          .catch((err) => {
+            logError("ShenAI: Screen wake lock request failed", errCtx(err, "wake_lock"));
+          });
       }
     }
 
@@ -323,17 +350,31 @@ export default function Shenai() {
           const measurementResults = sdk.getMeasurementResults();
           
           if (!measurementResults) {
-            logError("ShenAI: Measurement results are null - measurement may have failed");
+            logError("ShenAI: Measurement results are null", { phase: "measurement_finished" });
             return;
           }
-          
+
+          logInfo("ShenAI: Measurement finished, processing results");
+
           if (authData?.user && !finished) {
             finished = true;
-            await createOrUpdateUserHealthVitals(measurementResults);
+            try {
+              const vitalsResult = await createOrUpdateUserHealthVitals(measurementResults);
+              if (vitalsResult?.error) {
+                logError("ShenAI: Health vitals save returned error", {
+                  phase: "save_health_vitals",
+                  error: vitalsResult.error,
+                });
+              } else {
+                logInfo("ShenAI: Health vitals saved successfully");
+              }
+            } catch (vitalsError) {
+              logCritical("ShenAI: Failed to save health vitals", errCtx(vitalsError, "save_health_vitals"));
+            }
           }
           presentResults(measurementResults);
         } catch (error) {
-          logError("ShenAI: Error processing measurement results:", error);
+          logCritical("ShenAI: Error processing measurement results", errCtx(error, "process_measurement_results"));
           showError("Failed to process measurement results. Please try again.");
         }
         return;
@@ -341,15 +382,27 @@ export default function Shenai() {
     }
 
     function presentResults(results) {
-      const resultsElem = document.getElementById("results");
-      if (resultsElem) {
-        resultsElem.innerText = [
-          `HR: ${results.heart_rate_bpm} BPM`,
-          `HRV SDNN: ${results.hrv_sdnn_ms} ms`,
-          `HRV lnRMSSD: ${results.hrv_lnrmssd_ms} ms`,
-          `BR: ${Math.round(results.breathing_rate_bpm)} BPM`,
-        ].join(", ");
-      }
+      try {
+        if (!results) {
+          logError("ShenAI: presentResults called with null/undefined results", { phase: "present_results" });
+          return;
+        }
+        logInfo("ShenAI: Measurement complete, presenting results", {
+          heartRate: results?.heart_rate_bpm,
+          hrvSdnn: results?.hrv_sdnn_ms,
+          breathingRate: results?.breathing_rate_bpm,
+        });
+        const resultsElem = document.getElementById("results");
+        if (resultsElem) {
+          resultsElem.innerText = [
+            `HR: ${results.heart_rate_bpm} BPM`,
+            `HRV SDNN: ${results.hrv_sdnn_ms} ms`,
+            `HRV lnRMSSD: ${results.hrv_lnrmssd_ms} ms`,
+            `BR: ${Math.round(results.breathing_rate_bpm)} BPM`,
+          ].join(", ");
+        } else {
+          logWarn("ShenAI: results element not found, cannot display measurement");
+        }
 
       const intervals = results.heartbeats;
       if (intervals) {
@@ -391,6 +444,9 @@ export default function Shenai() {
       if (progressElem) {
         progressElem.innerText = "";
       }
+      } catch (err) {
+        logError("ShenAI: Error presenting results", errCtx(err, "present_results"));
+      }
     }
 
     function makeCsvHref(columnNames, dataRows) {
@@ -421,6 +477,7 @@ export default function Shenai() {
   useEffect(() => {
     return () => {
       if (!shenai) return;
+      logInfo("ShenAI: Running SDK cleanup on unmount");
       try {
         if (
           shenai.MxFinishFrameProcessing &&
@@ -438,16 +495,13 @@ export default function Shenai() {
         }
         if (shenai.deinitialize) shenai.deinitialize();
         if (shenai.destroyRuntime) shenai.destroyRuntime();
-        logInfo("ShenAI: Shenai SDK cleaned up on unmount");
-
         shenai.setCameraMode(shenai.CameraMode.OFF);
+        logInfo("ShenAI: Shenai SDK cleaned up on unmount");
       } catch (e) {
-        logWarn("ShenAI: Error cleaning up Shenai SDK:", e);
+        logError("ShenAI: Error cleaning up Shenai SDK", errCtx(e, "sdk_cleanup_unmount"));
       }
     };
   }, [shenai]);
-
-  logInfo("ShenAI: Shenai initialized");
 
   // Check if we're on the patient/check-vitals page
   const isCheckVitalsPage = location.pathname === '/patient/check-vitals';
